@@ -1,7 +1,7 @@
 const workercode = () => {
   const config = {
     duration: 0,
-    interval: 0
+    interval: 0,
   };
   self.onmessage = function (e) {
     if (e.data.config) {
@@ -14,13 +14,14 @@ const workercode = () => {
     var now = Date.now();
     var end = now + config.duration;
     var tick = now + config.interval;
+    var fn = new Function(e.data.script);
     while (Date.now() < end) {
       count++;
       if (Date.now() > tick) {
         self.postMessage(count);
         tick = Date.now() + config.interval;
       }
-      eval(e.data.script);
+      fn();
     }
     self.postMessage("end");
   };
