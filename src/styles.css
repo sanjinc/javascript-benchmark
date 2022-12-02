@@ -1,11 +1,22 @@
 @import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;900&family=Source+Code+Pro:wght@200;400;900&display=swap");
 
+:root {
+  --page-offset: 20px;
+  --container-width: 800px;
+  --golden-ratio: 1.618;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 html,
 body {
   height: 100%;
   margin: 0;
   padding: 0;
+  font-family: sans-serif;
 }
 
 body {
@@ -14,26 +25,50 @@ body {
   font-weight: 400;
 }
 
+a {
+  color: inherit;
+}
+
+a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+
+.text-center {
+  text-align: center;
+}
+
 #root {
-  height: 100%;
+  min-height: 100%;
+}
+
+.page {
+  padding: var(--page-offset);
+  /* box-sizing: border-box; */
+  height: calc(100vh - var(--page-offset) - var(--page-offset));
+}
+
+.content {
+  margin-top: 10px;
 }
 
 .js {
   position: absolute;
-  left: 20px;
-  top: 20px;
+  left: var(--page-offset);
+  top: var(--page-offset);
   width: 50px;
 }
 
 .footer {
   width: 100%;
   position: absolute;
-  bottom: 20px;
+  bottom: var(--page-offset);
   left: 0;
   color: #888;
   font-size: 10px;
   font-family: Roboto;
   font-weight: 300;
+  text-align: center;
 }
 
 .footer a {
@@ -47,42 +82,49 @@ body {
 }
 
 .container {
-  font-family: sans-serif;
-  text-align: center;
-  max-width: 800px;
-  height: 100%;
+  width: 100%;
+  max-width: var(--container-width);
   margin-left: auto;
   margin-right: auto;
   display: block;
+}
+
+.container--info {
+  max-width: calc(var(--container-width) / var(--golden-ratio));
 }
 
 .wrapper {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  height: 100%;
-}
-
-.content {
-  margin-top: -50px;
+  min-height: 100%;
 }
 
 .rocket {
   position: absolute;
-  margin-left: 20px;
+  top: 0px;
+  left: 105%;
 }
 
-h1 {
-  margin-top: 0;
+.title-container {
+  text-align: center;
+}
+
+.title {
+  display: inline-block;
+  position: relative;
+  margin-top: -0.2em;
   margin-bottom: 10px;
   font-weight: 900;
-  font-size: 80px;
+  font-size: 40px;
 }
 
-h2 {
+.subtitle {
   margin-top: 0;
   margin-bottom: 40px;
   font-weight: 200;
+  font-size: 20px;
+  text-align: center;
 }
 
 h1,
@@ -92,13 +134,14 @@ h2 {
 }
 
 .benchmarks {
+  margin-top: 30px;
   width: 100%;
   gap: 20px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
-.benchmarks div {
+.benchmark {
   flex: 1;
 }
 
@@ -116,9 +159,8 @@ h2 {
   cursor: pointer;
 }
 
-.run:hover .gear-icon {
-  /* transform: scale(1.05); */
-  transform: rotate(45deg);
+.run.run--busy {
+  cursor: not-allowed;
 }
 
 .play-icon-container {
@@ -137,7 +179,7 @@ h2 {
   transition: transform linear 0.2s;
 }
 
-.rotate {
+.gear-icon--rotate {
   animation: rotation 1.5s infinite linear;
 }
 
@@ -153,7 +195,7 @@ h2 {
 textarea {
   display: block;
   width: 100%;
-  height: 200px;
+  min-height: 50px;
   background-color: #2f3134;
   border: none;
   border-radius: 5px;
@@ -163,7 +205,7 @@ textarea {
   box-sizing: border-box;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  font-family: "Source Code Pro";
+  font-family: "Source Code Pro", monospace;
 }
 
 button {
@@ -173,7 +215,7 @@ button {
 }
 
 .rails {
-  margin-top: 40px;
+  margin-top: 35px;
 }
 
 .rails--hidden {
@@ -191,12 +233,9 @@ button {
   width: 0%;
   height: inherit;
   background-color: #efdb50;
-}
-
-.bar--animated {
   transition-property: width;
   transition-timing-function: linear;
-  /* transition-duration: 2s; */
+  /* transition-duration: 0.2s; */
 }
 
 .play-icon {
@@ -223,4 +262,43 @@ button {
   border-left: 7px solid #1d1e20;
   top: 6px;
   left: 9px;
+}
+
+.info {
+  background-color: #111;
+  color: #ccc;
+  padding: var(--page-offset);
+  font-size: 12px;
+  line-height: 24px;
+}
+
+hr {
+  background-color: #333;
+  height: 1px;
+  border: none;
+  margin-block: var(--page-offset);
+}
+
+@media screen and (min-width: 600px) {
+  .content {
+    margin-top: 0;
+  }
+  .title {
+    font-size: 70px;
+  }
+  .subtitle {
+    font-size: 24px;
+  }
+  .benchmarks {
+    flex-direction: row;
+  }
+  textarea {
+    min-height: 150px;
+  }
+}
+
+@media (hover: hover) {
+  .run:hover .gear-icon {
+    transform: rotate(45deg);
+  }
 }
